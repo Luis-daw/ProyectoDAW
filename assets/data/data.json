@@ -1,0 +1,40 @@
+{
+    "products": [
+        {
+            "product": {
+                "name": "test1",
+                "id": 23,
+                "provider": "antonio",
+                "price": 100
+            },
+            "quantity": 2
+        },
+        {
+            "product": {
+                "name": "test12",
+                "id": 24,
+                "provider": "antonio",
+                "price": 100
+            },
+            "quantity": 2
+        },
+        {
+            "product": {
+                "name": "test13",
+                "id": 25,
+                "provider": "antonio",
+                "price": 100
+            },
+            "quantity": 2
+        },
+        {
+            "product": {
+                "name": "test14",
+                "id": 26,
+                "provider": "antonio",
+                "price": 100
+            },
+            "quantity": 2
+        }
+    ]
+}

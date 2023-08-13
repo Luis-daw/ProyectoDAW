@@ -1,0 +1,12 @@
+.form{
+    padding: 100px;
+    margin: 50px 100px;
+    border: 1px solid black;
+}
+.row{
+    margin-bottom: 20px;
+}
+.row>input{
+    border: 1px solid black;
+    width: 65%;
+}
