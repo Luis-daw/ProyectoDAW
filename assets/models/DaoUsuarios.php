@@ -2,7 +2,7 @@
 
 require_once("LibraryPDO.php");
 require_once "classes/Usuario.php";
-class DaoUsuarios extends DB
+class DaoUsers extends DB
 {
 
     //Array de objetos tipo marcascoches
@@ -94,5 +94,12 @@ class DaoUsuarios extends DB
         //    $marca->__set("Logo",$fila["Logo"]);
         //    $this->marcasCoches[] = $marca;
         // }
+    }
+    public function comprobarLogin($userName, $password){
+        $consulta = "SELECT * FROM usuarios WHERE Nombre = ";
+        $param = array();
+    }
+    public function crearUsuario($userName, $name, $password, $birthDate, $direction, $permissions){
+        
     }
 }
