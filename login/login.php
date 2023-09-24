@@ -10,7 +10,7 @@ if (isset($_POST['enviar'])) {
     $password = $_POST['pass'];
     $destinyUrl = '.';
     echo $userName;
-    if ($daoUsers -> comprobarLogin($userName, $password)){
+    if ($daoUsers -> login($userName, $password)){
         $_SESSION['user'] = $userName;
         $destinyUrl = '..';
     }

@@ -6,7 +6,7 @@
 .row{
     margin-bottom: 20px;
 }
-.row>input{
+.row input{
     border: 1px solid black;
     width: 65%;
 }

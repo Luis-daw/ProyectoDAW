@@ -15,8 +15,22 @@ class DaoUsers extends DB
     {
         $this->dbname = $dbname;
     }
-    public function list($where = 1, $orderField = '', $orderType = 'DESC'){
-        $query = "SELECT * FROM usuarios WHERE :where ORDER BY ";
+    public function list($filterMessage = 1, $orderField = '', $orderType = 'DESC'){
+        $query = "SELECT * FROM usuarios WHERE 1";
+        
+        
+        $query.= "AND :where ORDER BY :orderField $orderType";
+
+        $param = array();
+
+        $param[''];
+    }
+    private function testFilterMessage($filterMessage){
+        $message = "";
+
+        if ($filterMessage){
+
+        }
     }
     //Inserta una marca en la tabla
     public function insertUser($usuario)

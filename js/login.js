@@ -11,10 +11,10 @@ let ver = false;
 btnPassword.addEventListener("click", function () {
    if (ver) {
       ver = false;
-      textPassword.type = passwordType.password;
+      textPassword.type = inputType.password;
    } else {
       ver = true;
-      textPassword.type = passwordTypes.text;
+      textPassword.type = inputType.text;
    }
 });
 
