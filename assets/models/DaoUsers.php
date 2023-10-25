@@ -1,7 +1,7 @@
 <?php
 
-require_once("LibraryPDO.php");
-require_once "classes/Usuario.php";
+require_once "./LibraryPDO.php";
+require_once "./classes/User.php";
 class DaoUsers extends DB
 {
 
@@ -75,7 +75,14 @@ class DaoUsers extends DB
         }
         return $usuario;
     }
+    public function buildUsersJson(){
+        $json = json_encode("");
 
+        header('Content-Type: application/json');
+        $fileName = './test/day_' . date("d-m-Y_H-i-s", time()) . '.json';
+        file_put_contents($fileName, $json);
+
+    }
     //Carga el contenido de la tabla en marcas coches
     // public function listar()
     // {

@@ -15,21 +15,31 @@ class DaoUsers extends DB
     {
         $this->dbname = $dbname;
     }
-    public function list($filterMessage = 1, $orderField = '', $orderType = 'DESC'){
+    public function toJson()
+    {
+        $products = list();
+
+        // Convertir el array de productos a JSON
+        $jsonData = json_encode(array_map(function ($product) {
+            return $product->toArray();
+        }, $products));
+
+        echo $jsonData;
+    }
+    public function list($filterMessage = 1, $orderField = '', $orderType = 'DESC')
+    {
+
         $query = "SELECT * FROM usuarios WHERE 1";
-        
-        
-        $query.= "AND :where ORDER BY :orderField $orderType";
 
         $param = array();
 
         $param[''];
     }
-    private function testFilterMessage($filterMessage){
+    private function testFilterMessage($filterMessage)
+    {
         $message = "";
 
-        if ($filterMessage){
-
+        if ($filterMessage) {
         }
     }
     //Inserta una marca en la tabla
@@ -83,8 +93,7 @@ class DaoUsers extends DB
         if (count($this->filas) == 1) {
             $fila = $this->filas[0];
             // $usuario = new Usuario($fila["Usuario"], $fila["Clave"],"","","","");
-        }
-        else{
+        } else {
             $usuario = null;
         }
         return $usuario;
@@ -106,14 +115,17 @@ class DaoUsers extends DB
     //         $this->usuarios[] = $usuario;
     //     }
     // }
-    public function login($userName, $password){
+    public function login($userName, $password)
+    {
         $consulta = "SELECT * FROM usuarios WHERE Nombre = ";
         $param = array();
     }
-    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions){
+    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions)
+    {
         return new User($userName, $name, $surName, $this->hashKey($password), $birthDate, $direction, $permissions);
     }
-    private function hashKey($password){
+    private function hashKey($password)
+    {
         return sha1($password);
     }
 }

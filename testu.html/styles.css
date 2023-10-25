@@ -1,0 +1,35 @@
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #3498db; /* Azul */
+    color: #ffffff; /* Texto blanco */
+}
+
+/* Estilos para los encabezados en cada sección */
+h1.azul {
+    color: #3498db; /* Azul */
+}
+
+h2.verde {
+    color: #27ae60; /* Verde */
+}
+
+h2.gris-medio {
+    color: #888888; /* Gris medio */
+}
+
+h2.negro {
+    color: #000000; /* Negro */
+}
+
+/* Estilos para el contenido de las secciones */
+p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el pie de página */
+.footer {
+    background-color: #dddddd; /* Gris claro */
+    color: #000000; /* Texto negro */
+    padding: 10px 0;
+}
