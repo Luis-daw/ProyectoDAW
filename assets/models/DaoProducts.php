@@ -1,10 +1,9 @@
 <?php
 
 require_once("LibraryPDO.php");
-require_once "classes/Usuario.php";
-class DaoUsers extends DB
+require_once("classes/Product.php");
+class DaoProducts extends DB
 {
-
     //Array de objetos tipo marcascoches
     public $usuarios = array();
 
@@ -17,115 +16,88 @@ class DaoUsers extends DB
     }
     public function toJson()
     {
-        $products = list();
+        $products = $this->list();
+        $products = $this->getProductCategories($products);
+        foreach ($products as $product) {
+            $productData = [
+                "id" => $product->id,
+                "name" => $product->name,
+                "provider" => $product->provider,
+                "price" => $product->price,
+                "image" => $product->image
+            ];
+            //Creamos el array de las categorias
+            $categories = $product->categories;
 
-        // Convertir el array de productos a JSON
-        $jsonData = json_encode(array_map(function ($product) {
-            return $product->toArray();
-        }, $products));
-
-        echo $jsonData;
-    }
-    public function list($filterMessage = 1, $orderField = '', $orderType = 'DESC')
-    {
-
-        $query = "SELECT * FROM usuarios WHERE 1";
-
-        $param = array();
-
-        $param[''];
-    }
-    private function testFilterMessage($filterMessage)
-    {
-        $message = "";
-
-        if ($filterMessage) {
+            // Creamos el array principal con los datos
+            $data[] = [
+                'product' => $productData,
+                'categories' => $categories
+            ];
         }
+
+        // Convertir el arreglo principal en formato JSON
+        $json = json_encode($data);
+
+        // Guardar el JSON en un archivo (por ejemplo, 'productos.json')
+        $host = $_SERVER['HTTP_HOST'];
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+        $base_url = $protocol . $host;
+
+        // Ruta al archivo JSON de productos
+        $productos_json_url = $base_url . '/ProyectoDaw/productos.json';
+
+        echo $productos_json_url;
+        file_put_contents($productos_json_url, $json);
     }
-    //Inserta una marca en la tabla
-    public function insertUser($usuario)
+    public function getProductCategories($products)
     {
-        $consulta = "INSERT INTO usuarios VALUES (:userName, :name, :surName, :password, :birthDate, :direction, :permissions)";
+        foreach ($products as $key => $value) {
+            $query = "SELECT *
+            FROM products p
+            INNER JOIN product_category pc ON p.id = pc.id_product
+            INNER JOIN categories c ON pc.id_category = c.id
+            WHERE p.id = :id
+            ;
+            ";
+            $param = array();
+            $param[":id"] = $value->id;
+
+            $this->consultaDatos($query, $param);
+            $categories = array();
+            foreach ($this->filas as $fila) {
+                $categories[] = $fila['id'];
+            }
+            $value->addCategories($categories);
+        }
+        return $products;
+    }
+    public function list()
+    {
+
+        $query = "SELECT * FROM products WHERE 1";
 
         $param = array();
-        $param[":userName"] = $usuario->__get("userName");
-        $param[":name"] = $usuario->__get("name");
-        $param[":surName"] = $usuario->__get("surName");
-        $param[":password"] = $usuario->__get("password");
-        $param[":birthDate"] = $usuario->__get("birthDate");
-        $param[":direction"] = $usuario->__get("direction");
-        $param[":permissions"] = $usuario->__get("permissions");
-        $this->consultaSimple($consulta, $param);
-    }
 
-    public function actualizar($usuario)
-    {
-        $consulta = "UPDATE usuarios SET Clave=:Clave WHERE Usuario=:Usuario";
-        $param = array();
+        $this->consultaDatos($query, $param);
 
-        $param[":Usuario"] = $usuario->__get("usuario");
-        $param[":Clave"] = $usuario->__get("clave");
-
-        $this->consultaSimple($consulta, $param);
-    }
-
-    public function eliminar($nombreUsuario = "")
-    {
-
-        $consulta = "DELETE FROM usuarios WHERE Usuario=:Usuario";
-
-        $param = array();
-        $param[":Usuario"] = $nombreUsuario;
-
-        $this->consultaSimple($consulta, $param);
-    }
-
-    // //Devuelve una marca a partir de su id.
-    public function obtener($usuario = "")
-    {
-        $consulta = "SELECT * FROM usuarios WHERE Usuario=:Usuario";
-
-        $param = array();
-        $param[":Usuario"] = $usuario;
-
-        $this->consultaDatos($consulta, $param);
-
-        if (count($this->filas) == 1) {
-            $fila = $this->filas[0];
-            // $usuario = new Usuario($fila["Usuario"], $fila["Clave"],"","","","");
+        if (count($this->filas) > 0) {
+            $products = array();
+            foreach ($this->filas as $fila) {
+                $product = new Product(
+                    $fila['id'],
+                    $fila['name'],
+                    $fila['provider'],
+                    $fila['price'],
+                    $fila['image']
+                );
+                $products[] = $product;
+            }
         } else {
-            $usuario = null;
+            // No se encontraron resultados
+            echo "No se encontraron productos en la base de datos.";
         }
-        return $usuario;
-    }
 
-    //Carga el contenido de la tabla en marcas coches
-    // public function listar()
-    // {
-    //     //Consulta
-    //     $consulta = "SELECT * FROM usuarios";
-
-    //     //Vaciamos los arrays.
-    //     $param = array();
-    //     $this->usuarios = array();
-    //     $this->consultaDatos($consulta, $param);
-
-    //     foreach ($this->filas as $fila) {
-    //         $usuario = new Usuario($fila["Usuario"], $fila["Clave"],2,2,2,2);
-    //         $this->usuarios[] = $usuario;
-    //     }
-    // }
-    public function login($userName, $password)
-    {
-        $consulta = "SELECT * FROM usuarios WHERE Nombre = ";
-        $param = array();
-    }
-    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions)
-    {
-        return new User($userName, $name, $surName, $this->hashKey($password), $birthDate, $direction, $permissions);
-    }
-    private function hashKey($password)
-    {
-        return sha1($password);
+        return $products;
     }
 }
