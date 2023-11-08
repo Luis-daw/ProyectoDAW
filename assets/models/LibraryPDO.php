@@ -50,7 +50,6 @@
             $this->conectar();
 
             $sta = $this->connect->prepare($consulta);
-
             if(!($sta->execute($param))){
                 echo "Error en la consulta";
             }

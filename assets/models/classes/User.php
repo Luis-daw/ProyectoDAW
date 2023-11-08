@@ -9,7 +9,7 @@ class User{
     private $birthDate;
     private $direction;
     private $permissions;
-    public function __construct($userName, $name,$surName ,$password ,$birthDate, $direction, $permissions )
+    public function __construct($userName, $name, $surName, $birthDate, $direction, $permissions, $password)
     {
         $this->userName = $userName;
         $this->name = $name;

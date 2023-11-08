@@ -1,112 +1,125 @@
 <?php
 
-require_once "./LibraryPDO.php";
-require_once "./classes/User.php";
+require_once "LibraryPDO.php";
+require_once "classes/User.php";
 class DaoUsers extends DB
 {
 
-    //Array de objetos tipo marcascoches
-    public $usuarios = array();
+   //Array de objetos tipo marcascoches
+   public $usuarios = array();
 
-    /**
-     * Recibe la BBDD al crear el DAO
-     */
-    public function __construct($dbname)
-    {
-        $this->dbname = $dbname;
-    }
-    public function list($where = 1, $orderField = '', $orderType = 'DESC'){
-        $query = "SELECT * FROM usuarios WHERE :where ORDER BY ";
-    }
-    //Inserta una marca en la tabla
-    public function insertUser($usuario)
-    {
-        $consulta = "INSERT INTO usuarios VALUES (:userName, :name, :surName, :password, :birthDate, :direction, :permissions)";
+   /**
+    * Recibe la BBDD al crear el DAO
+    */
+   public function __construct($dbname)
+   {
+      $this->dbname = $dbname;
+   }
+   //Inserta una marca en la tabla
+   public function insert($user)
+   {
+      $query= "INSERT INTO users VALUES (:username, :name, :surname, :password, :birthdate, :direction, :permissions)";
+      $param = array();
+      $param[":username"] = $user->__get("userName");
+      $param[":name"] = $user->__get("name");
+      $param[":surname"] = $user->__get("surName");
+      $param[":password"] = $user->__get("password");
+      $param[":birthdate"] = $user->__get("birthDate");
+      $param[":direction"] = $user->__get("direction");
+      $param[":permissions"] = $user->__get("permissions");
+      var_dump($user->__get("birthDate"));
+      $this->consultaSimple($query, $param);
 
-        $param = array();
-        $param[":userName"] = $usuario->__get("userName");
-        $param[":name"] = $usuario->__get("name");
-        $param[":surName"] = $usuario->__get("surName");
-        $param[":password"] = $usuario->__get("password");
-        $param[":birthDate"] = $usuario->__get("birthDate");
-        $param[":direction"] = $usuario->__get("direction");
-        $param[":permissions"] = $usuario->__get("permissions");
-        $this->consultaSimple($consulta, $param);
-    }
+   }
 
-    public function actualizar($usuario)
-    {
-        $consulta = "UPDATE usuarios SET Clave=:Clave WHERE Usuario=:Usuario";
-        $param = array();
+   public function list()
+   {
+      $consulta = "SELECT userName, name, surName, direction FROM users";
+      $param = array();
 
-        $param[":Usuario"] = $usuario->__get("usuario");
-        $param[":Clave"] = $usuario->__get("clave");
+      $this->consultaDatos($consulta, $param);
+      
+   }
 
-        $this->consultaSimple($consulta, $param);
-    }
+   public function eliminar($nombreUsuario = "")
+   {
 
-    public function eliminar($nombreUsuario = "")
-    {
+      $consulta = "DELETE FROM usuarios WHERE Usuario=:Usuario";
 
-        $consulta = "DELETE FROM usuarios WHERE Usuario=:Usuario";
+      $param = array();
+      $param[":Usuario"] = $nombreUsuario;
 
-        $param = array();
-        $param[":Usuario"] = $nombreUsuario;
+      $this->consultaSimple($consulta, $param);
+   }
 
-        $this->consultaSimple($consulta, $param);
-    }
+   // //Devuelve una marca a partir de su id.
+   public function obtener($usuario = "")
+   {
+      $consulta = "SELECT * FROM usuarios WHERE Usuario=:Usuario";
 
-    // //Devuelve una marca a partir de su id.
-    public function obtener($usuario = "")
-    {
-        $consulta = "SELECT * FROM usuarios WHERE Usuario=:Usuario";
+      $param = array();
+      $param[":Usuario"] = $usuario;
 
-        $param = array();
-        $param[":Usuario"] = $usuario;
+      $this->consultaDatos($consulta, $param);
 
-        $this->consultaDatos($consulta, $param);
+      if (count($this->filas) == 1) {
+         $fila = $this->filas[0];
+         // $usuario = new Usuario($fila["Usuario"], $fila["Clave"],"","","","");
+      } else {
+         $usuario = null;
+      }
+      return $usuario;
+   }
+   public function buildUsersJson()
+   {
+      $json = json_encode("");
 
-        if (count($this->filas) == 1) {
-            $fila = $this->filas[0];
-            // $usuario = new Usuario($fila["Usuario"], $fila["Clave"],"","","","");
-        }
-        else{
-            $usuario = null;
-        }
-        return $usuario;
-    }
-    public function buildUsersJson(){
-        $json = json_encode("");
+      header('Content-Type: application/json');
+      $fileName = './test/day_' . date("d-m-Y_H-i-s", time()) . '.json';
+      file_put_contents($fileName, $json);
+   }
+   //Carga el contenido de la tabla en marcas coches
+   // public function listar()
+   // {
+   //     //Consulta
+   //     $consulta = "SELECT * FROM usuarios";
 
-        header('Content-Type: application/json');
-        $fileName = './test/day_' . date("d-m-Y_H-i-s", time()) . '.json';
-        file_put_contents($fileName, $json);
+   //     //Vaciamos los arrays.
+   //     $param = array();
+   //     $this->usuarios = array();
+   //     $this->consultaDatos($consulta, $param);
 
-    }
-    //Carga el contenido de la tabla en marcas coches
-    // public function listar()
-    // {
-    //     //Consulta
-    //     $consulta = "SELECT * FROM usuarios";
+   //     foreach ($this->filas as $fila) {
+   //         $usuario = new Usuario($fila["Usuario"], $fila["Clave"],2,2,2,2);
+   //         $this->usuarios[] = $usuario;
+   //     }
+   // }
 
-    //     //Vaciamos los arrays.
-    //     $param = array();
-    //     $this->usuarios = array();
-    //     $this->consultaDatos($consulta, $param);
+   /**
+    * Si es 1 es que ha encontrado datos, devuelve true, si no false
+    * no puede haber mas de un username igual
+    */
+   public function login($userName, $password)
+   {
+      $query = 
+      "SELECT * 
+      FROM users 
+      WHERE username = :username 
+      AND password = :password 
+      LIMIT 1";
+      $param = array();
+      $param[':username'] = $userName;
+      $param[':password'] = $this->hashKey($password);
+      $this->consultaDatos($query, $param);
 
-    //     foreach ($this->filas as $fila) {
-    //         $usuario = new Usuario($fila["Usuario"], $fila["Clave"],2,2,2,2);
-    //         $this->usuarios[] = $usuario;
-    //     }
-    // }
-    public function login($userName, $password){
-        $consulta = "SELECT * FROM usuarios WHERE Nombre = ";
-        $param = array();
-    }
-    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions){
-        return new User($userName, $name, $surName, $this->hashKey($password), $birthDate, $direction, $permissions);
-    }
-    private function hashKey($password){
-        return sha1($password);
-    }
+      return count($this->filas) == 1;
+   }
+   public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions)
+   {
+      return new User($userName, $name, $surName, $birthDate, $direction, $permissions, $this->hashKey($password));
+   }
+   private function hashKey($password)
+   {
+      return sha1($password);
+   }
 }
