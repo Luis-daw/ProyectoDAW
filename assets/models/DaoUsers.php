@@ -114,6 +114,19 @@ class DaoUsers extends DB
 
       return count($this->filas) == 1;
    }
+   public function permissions($username)
+   {
+      $query = 
+      "SELECT permission_level
+      FROM users 
+      WHERE username = :username
+      LIMIT 1";
+      $param = array();
+      $param[':username'] = $username;
+      $this->consultaDatos($query, $param);
+      return $this->filas[0]["permission_level"];
+   }
+   
    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions)
    {
       return new User($userName, $name, $surName, $birthDate, $direction, $permissions, $this->hashKey($password));
