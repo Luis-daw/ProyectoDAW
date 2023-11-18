@@ -19,6 +19,11 @@
    <main id="productContainer" class="col-lg-10 col-md-10 col-sm-12 row">
 
    </main>
+
+   <?php
+
+      echo'<script src="../js/productApp.js" type="module"></script>';
+   ?>
 </body>
 
 </html>

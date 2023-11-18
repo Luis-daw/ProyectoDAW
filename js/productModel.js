@@ -1,12 +1,13 @@
 import Product from "./product.js";
-export default class ProductModel{
+// export default class ProductModel{
    
-   constructor(){
+//    constructor(){
 
-   }
-}
+//    }
+// }
 
-let ProductModel = (function (){
+
+export let ProductModel = (function (){
    let instantiated;
 
    function init(){
@@ -51,6 +52,12 @@ let ProductModel = (function (){
                throw new Error('No llegan productos');
             }
             this.#products.push(...products);
+         }
+         getAllProducts(){
+            return this.#products;
+         }
+         getFilteredProducts(){
+            return this.#filteredProducts;
          }
       }
 

@@ -15,7 +15,7 @@
    if (!isset($_SESSION['user']['permissions'])) {
       $_SESSION['user']['permissions'] = 0;
    }
-   $_SESSION['user']['permissions'] = 5;
+   $_SESSION['user']['permissions'] = 2;
    ?>
    <nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
       <div class="container-fluid">
@@ -62,7 +62,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="./user/profile">Perfil</a></li>';
                   if ($_SESSION['user']['permissions'] >= 2) {
-                     echo '<li><a class="dropdown-item" href="./products/AddProduct">Añadir producto</a></li>';
+                     echo '<li><a class="dropdown-item" href="./products/addproduct">Añadir producto</a></li>';
                   }
                   echo '   </ul>
                         </li>';

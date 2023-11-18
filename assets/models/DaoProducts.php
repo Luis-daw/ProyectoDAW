@@ -45,9 +45,8 @@ class DaoProducts extends DB
         $base_url = $protocol . $host;
 
         // Ruta al archivo JSON de productos
-        $productos_json_url = $base_url . '/ProyectoDaw/productos.json';
-
-        echo $productos_json_url;
+        $productos_json_url = $base_url . '/proyectodaw/data/products.json';
+        $productos_json_url = "../data/products.json";
         file_put_contents($productos_json_url, $json);
     }
     public function getProductCategories($products)
