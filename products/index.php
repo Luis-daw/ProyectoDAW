@@ -15,14 +15,24 @@
    $daoProducts = new DaoProducts("proyecto-daw");
    $daoProducts->toJson();
    ?>
-   <aside class="col-lg-2 col-md-2"></aside>
+   <aside class="col-lg-2 col-md-2" style="border: 1px solid black;">
+      <?php
+      $categories = $daoProducts->getCategories();
+      echo "<select id='categoriesSelect'>";
+      foreach ($categories as $id => $category) {
+         echo "<option value='" . $id . "'>" . $category . "</option>";
+      }
+      echo "</select>";
+      ?>
+      
+   </aside>
    <main id="productContainer" class="col-lg-10 col-md-10 col-sm-12 row">
 
    </main>
 
    <?php
 
-      echo'<script src="../js/productApp.js" type="module"></script>';
+   echo '<script src="../js/productApp.js" type="module"></script>';
    ?>
 </body>
 

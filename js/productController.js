@@ -13,18 +13,25 @@ export default class ProductController  {
       })
       .then(data => {
          console.log(data);
+         console.log(this.#ProductModel.addProducts(data));
       })
       .catch(error => {
          console.error("Error: ",error)
       })
    }
    constructor(){
-      // this.#ProductView = new ProductView();
-      // this.#ProductModel = new ProductModel();
+      this.#ProductView = new ProductView();
+      this.#ProductModel = ProductModel.getInstance();
+      this.select = document.getElementById('categoriesSelect');
       this.onLoad();
    }
    
    onLoad(){
       this.#loadObjects();
+      this.select.addEventListener('change', (event) => {
+         this.#ProductModel.filterProducts(event.target.value);
+         console.log(this.#ProductModel.products)
+         console.log(this.#ProductModel.filteredProducts)
+      });
    }
 }
