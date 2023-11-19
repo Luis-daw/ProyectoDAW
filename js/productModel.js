@@ -48,32 +48,26 @@ export let ProductModel = (function (){
             this.#filteredProducts = [];
          }
          addProducts(products = null){
-            console.log('entra addProducts');
             if (!Array.isArray(products)) {
-               throw new Error('No llegan productos');
+               throw new Error('Los productos no están cargando');
             }
             this.#products.push(...products);
          }
          filterProducts(category = null, minPrice, maxPrice){
-            console.log('Entra filterProducts');
             this.#filteredProducts = [...this.#products];
             if (category) this.filterProductsCategory(category);
-            if (maxPrice || minPrice) this.filterProductsPrice(minPrice, maxPrice)
+            if (maxPrice || minPrice) this.filterProductsPrice(minPrice || Number.MIN_SAFE_INTEGER, maxPrice || Number.MAX_SAFE_INTEGER)
          }
          filterProductsCategory(category){
             this.#filteredProducts = this.#filteredProducts.filter((product) => {
-               console.log(product);
                return product.categories.some(cate => cate === category);
             })
          }
-         filterProductsPrice(minPrice = Number.MIN_SAFE_INTEGER, maxPrice = Number.MAX_SAFE_INTEGER){
-            console.log('Entra filterProductsPrice');
+         filterProductsPrice(minPrice, maxPrice){
             this.#filteredProducts = this.#filteredProducts.filter((product) => {
-               return product.product.price >= minPrice && product.product.price <= maxPrice;
+               const price = parseFloat(product.product.price);
+               return price >= minPrice && price <= maxPrice;
             })
-         }
-         getFilteredProducts(){
-            return this.#filteredProducts;
          }
          get products(){
             return this.#products;

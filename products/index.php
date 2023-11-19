@@ -15,18 +15,21 @@
    $daoProducts = new DaoProducts("proyecto-daw");
    $daoProducts->toJson();
    ?>
-   <aside class="col-lg-2 col-md-2" style="border: 1px solid black;">
+   <aside class="col-lg-3 col-md-4 col-sm-12 row" style="border: 1px solid black;">
       <?php
       $categories = $daoProducts->getCategories();
-      echo "<select id='categoriesSelect'>";
+      echo "<select id='categoriesSelect' class='col-12'>";
       foreach ($categories as $id => $category) {
          echo "<option value='" . $id . "'>" . $category . "</option>";
       }
       echo "</select>";
       ?>
-      
+      <input type="number" name="min" id="min" min="0" class="col-6" placeholder="Min">
+      <input type="number" name="max" id="max" min="0" class="col-6" placeholder="Máx">
+      <input type="" name="min" id="min" min="0" class="col-6">
+      <button id="filter"></button>
    </aside>
-   <main id="productContainer" class="col-lg-10 col-md-10 col-sm-12 row">
+   <main id="productContainer" class="col-lg-9 col-md-8 col-sm-12 row">
 
    </main>
 
