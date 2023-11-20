@@ -12,12 +12,13 @@ export default class ProductController  {
    #loadObjects = function (){
       fetch ("../data/products.json")
       .then(response => {
-         console.log(response);
          return response.json();
       })
       .then(data => {
-         console.log(data);
-         console.log(this.#ProductModel.addProducts(data));
+         console.log(...data);
+         this.#ProductModel.addProducts(data);
+         this.#ProductView.showProducts(this.#ProductModel.products);
+
       })
       .catch(error => {
          console.error("Error: ",error)
@@ -28,13 +29,14 @@ export default class ProductController  {
       this.#ProductModel = ProductModel.getInstance();
       this.select = document.getElementById('categoriesSelect');
       this.filter = document.getElementById('filter');
+      console.log('filter');
+      console.log(this.filter);
       this.max = document.getElementById('max');
       this.min = document.getElementById('min');
       this.onLoad();
    }
    
    onLoad(){
-      console.log('onload');
       this.#loadObjects();
       this.bindCategoriesEvent();
       this.bindFilterEvent();
@@ -42,18 +44,15 @@ export default class ProductController  {
    bindCategoriesEvent(){
       console.log('Entra categorias');
       this.select.addEventListener('change', (event) => {
-         console.log(this.max.value);
-         console.log(this.min.value);
          this.#ProductModel.filterProducts(event.target.value, this.min.value, this.max.value);
-         // this.#ProductView.showProducts(this.#ProductModel.products);
-         console.log(this.#ProductModel.filteredProducts);
+         this.#ProductView.showProducts(this.#ProductModel.filteredProducts);
       });
    }
    bindFilterEvent(){
-      this.filter.addEventListener('change', (event) => {
-         this.#ProductModel.filterProducts(event.target.value);
-         console.log(this.#ProductModel.products);
-         console.log(this.#ProductModel.filteredProducts);
+      this.filter.addEventListener('click', (event) => {
+         console.log("Ejecuta boton");
+         this.#ProductModel.filterProducts(this.select.value, this.min.value, this.max.value);
+         this.#ProductView.showProducts(this.#ProductModel.filteredProducts);
       });
    }
 }

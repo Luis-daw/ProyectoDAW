@@ -7,18 +7,18 @@ export default class ProductView{
    productComponent(product){
       console.log('entraproduct');
       return `
-      <article class="col-xl-3 col-lg-3 col-md-4 ps-3">
+      <article class="col-xl-4 col-lg-4 col-md-6 ps-1 product">
          <h3>${product.name}</h3>
          <img src="${product.image}" alt="Imagen de ${product.name}">
          <p class="text-end">${product.price}</p>
       </article>
       `;
    }
-   showProducts(productList = []){
+   showProducts(productList){
       this.changeContainer();
       this.#container.innerHTML = "";
       productList.forEach(product => {
-         this.#container.innerHTML += this.productComponent(product);
+         this.#container.innerHTML += this.productComponent(product.product);
       });
    }
    changeContainer(){
