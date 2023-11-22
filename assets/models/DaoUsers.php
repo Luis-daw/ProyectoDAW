@@ -27,7 +27,6 @@ class DaoUsers extends DB
       $param[":birthdate"] = $user->__get("birthDate");
       $param[":direction"] = $user->__get("direction");
       $param[":permissions"] = $user->__get("permissions");
-      var_dump($user->__get("birthDate"));
       $this->consultaSimple($query, $param);
 
    }
@@ -41,6 +40,30 @@ class DaoUsers extends DB
       
    }
 
+   public function update($username, $permission){
+      $query = "UPDATE users
+      SET permission_level = :permission
+      WHERE username = :username";
+      $param= array();
+      $param[':permission'] = $permission;
+      $param[':username'] = $username;
+      $this->consultaSimple($query,$param);
+   }
+   public function getUsersPermissions($permissionsLevel, $username = false){
+      $query = "SELECT users.username, permissions.permission_level, permissions.permission_name 
+      FROM users 
+      LEFT JOIN permissions ON users.permission_level = permissions.permission_level 
+      WHERE permissions.permission_level < :permissions";
+      $param = array();
+      if ($username){
+         $query .= " AND username LIKE :username";
+         $param[':username'] = "%".$username."%";
+      }
+      $param[':permissions'] = $permissionsLevel;
+      $this->consultaDatos($query, $param);
+
+      return $this->filas;
+   }
    public function eliminar($nombreUsuario = "")
    {
 

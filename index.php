@@ -10,12 +10,15 @@
 </head>
 
 <body>
+   <select name="" id="">
+      <option value=""></option>
+   </select>
    <?php
    session_start();
    if (!isset($_SESSION['user']['permissions'])) {
       $_SESSION['user']['permissions'] = 0;
    }
-   $_SESSION['user']['permissions'] = 2;
+   $_SESSION['user']['permissions'] = 5;
    ?>
    <nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
       <div class="container-fluid">

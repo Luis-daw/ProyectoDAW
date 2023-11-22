@@ -1,30 +1,63 @@
+:root {
+   --color-primario: #3498db;
+   /* Azul */
+   --color-secundario: #2ecc71;
+   /* Verde */
+   --color-fondo: #f8f9fa;
+   /* Gris claro */
+   --color-texto: #333;
+   /* Negro */
+   --color-enlace: #3498db;
+   /* Azul */
+   --color-enlace-hover: #2070a8;
+   /* Azul más oscuro al pasar el ratón */
+   --color-destacado: #f39c12;
+   /* Naranja */
+   --color-borde: #ddd;
+   /* Gris claro para bordes */
+}
+body {
+   background-color: var(--color-fondo);
+   color: var(--color-texto);
+ }
+ h1, h2, h3 {
+   color: var(--color-primario);
+ }
+ a {
+   color: var(--color-enlace);
+   text-decoration: none;
+ }
+ a:hover {
+   color: var(--color-enlace-hover);
+ }
 .azul {
-    color: #3498db;
-  }
-  
-  .gris {
-    color: #888888;
-  }
-  
-  .verde {
-    color: #27ae60;
-  }
-  
-  .blanco {
-    color: #ffffff;
-  }
-  
-  .negro {
-    color: #000000;
-  }
-  .gris-claro {
-    color: #dddddd;
-  }
-  
-  .gris-medio {
-    color: #888888;
-  }
-  
-  .gris-oscuro {
-    color: #333333;
-  }
+   color: #3498db;
+}
+
+.gris {
+   color: #888888;
+}
+
+.verde {
+   color: #27ae60;
+}
+
+.blanco {
+   color: #ffffff;
+}
+
+.negro {
+   color: #000000;
+}
+
+.gris-claro {
+   color: #dddddd;
+}
+
+.gris-medio {
+   color: #888888;
+}
+
+.gris-oscuro {
+   color: #333333;
+}

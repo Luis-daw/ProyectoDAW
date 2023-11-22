@@ -24,7 +24,7 @@
          //Añadir aqui lo de los permisos, puedo modificar lo del login para sacarlos
          $_SESSION['user']['name'] = $username;
          $_SESSION['user']['permissions'] = $daoUsers->permissions($username); 
-         header("Location: ../"); // Reemplaza "confirmation.php" con la página a la que deseas redirigir
+         header("Location: ../"); 
          exit();
       }
    } 
