@@ -5,13 +5,15 @@ export default class ProductView{
    }
 
    productComponent(product){
-      console.log('entraproduct');
+      console.log(product);
       return `
-      <article class="col-xl-4 col-lg-4 col-md-6 ps-1 product">
-         <h3>${product.name}</h3>
-         <img src="${product.image}" alt="Imagen de ${product.name}">
-         <p class="text-end">${product.price}</p>
-      </article>
+         <article class="col-xl-4 col-lg-4 col-md-6 ps-1 product">
+            <a href='./product/?product=${product.name}'>
+               <h3>${product.name}</h3>
+               <img src="${product.image}" alt="Imagen de ${product.name}">
+               <p class="text-end">${product.price}</p>
+            </a> 
+         </article>
       `;
    }
    showProducts(productList){

@@ -71,24 +71,44 @@ class DaoProducts extends DB
       }
       return $products;
    }
-   public function addProduct($product)
+   public function addProduct($product, $status, $categories = null)
    {
-      $query = "INSERT INTO products (name, provider, price, image) VALUES (:name, :provider, :price, :image)";
+      echo "<br>";
+      $query = "INSERT INTO products (name, provider, price, image, status, description) VALUES (:name, :provider, :price, :image, :status, :description)";
 
       $param = array(
          ':name' => $product->name,
          ':provider' => $product->provider,
          ':price' => $product->price,
-         ':image' => $product->image
+         ':image' => $product->image,
+         ':status' => $status,
+         ':description' => $product->description
       );
-      // $param = array();
-      // $param[':name'] =  $name;
-      // $param[':provider'] =  $provider;
-      // $param[':price'] =  $price;
-      // $param[':image'] =  $image;
-      $this->consultaSimple($query, $param);
-      var_dump($query);
+
+      echo "<br>";
       var_dump($param);
+      echo "<br>";
+      var_dump($query);
+      echo "<br>";
+
+      $this->consultaSimple($query, $param);
+   }
+   public function getProductId($name, $price)
+   {
+      $query = "SELECT id FROM products WHERE name=:name AND price=:price LIMIT 1";
+      $param = array(
+         ':name' => $name,
+         ':price' => $price
+      );
+      $this->consultaDatos($query, $param);
+      var_dump($this->filas);
+      if (!empty($this->filas) && isset($this->filas[0]['id'])) {
+         // Devolver el ID si hay resultados
+         return $this->filas[0]['id'];
+      } else {
+         // Devolver algo que indique que no se encontró ningún resultado
+         return null;
+      }
    }
    public function getCategories()
    {
@@ -107,14 +127,15 @@ class DaoProducts extends DB
       }
       return $categories;
    }
-   public function list($filter = null)
+   public function list($filter = "enabled")
    {
 
       $query = "SELECT * FROM products WHERE 1";
-      if ($filter !== null) {
-         $query .= " " . $filter;
-      }
       $param = array();
+      if ($filter !== null) {
+         $query .= " AND status =:status";
+         $param['status'] = $filter;
+      }
 
       $this->consultaDatos($query, $param);
 
@@ -126,7 +147,8 @@ class DaoProducts extends DB
                $fila['name'],
                $fila['provider'],
                $fila['price'],
-               $fila['image']
+               $fila['image'],
+               $fila['description']
             );
             $products[] = $product;
          }
@@ -137,8 +159,47 @@ class DaoProducts extends DB
 
       return $products;
    }
-   public function createProduct($name, $username, $price, $image = null)
+   public function getProductName($name)
    {
-      return new Product(null, $name, $username, $price, $image);
+      $query = "SELECT * FROM products WHERE name =:name";
+      $param = array();
+      $param[':name'] = $name;
+
+      $this->consultaDatos($query, $param);
+
+      if (count($this->filas) > 0) {
+         $products = array();
+         foreach ($this->filas as $fila) {
+            $product = new Product(
+               $fila['id'],
+               $fila['name'],
+               $fila['provider'],
+               $fila['price'],
+               $fila['image'],
+               $fila['description']
+            );
+            $products[] = $product;
+         }
+      } else {
+         // No se encontraron resultados
+         echo "No se encontraron productos en la base de datos.";
+      }
+      return reset($products);
+   }
+   public function insertCategoriesProduct($categories, $id)
+   {
+      $query = "INSERT INTO product_category (id_product, id_category) VALUES (:id, :category)";
+      $param = array();
+      $param['id'] = $id;
+      var_dump($query);
+      foreach ($categories as $category) {
+         $param[':category'] = $category;
+         $this->consultaSimple($query, $param);
+      }
+   }
+   public function createProduct($name, $username, $price, $image, $description)
+   {
+      echo "<br> nombre $name";
+      return new Product(null, $name, $username, $price, $image, $description);
    }
 }

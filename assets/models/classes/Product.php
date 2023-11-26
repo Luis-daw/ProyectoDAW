@@ -6,13 +6,16 @@ class Product{
     private $provider;
     private $price;
     private $image;
+    private $description;
     private $categories = array();
 
-    public function __construct($id, $name, $provider, $price, $image) {
+    public function __construct($id, $name, $provider, $price, $image, $description) {
         $this->id = $id;
         $this->name = $name;
         $this->provider = $provider;
         $this->price = $price;
+        $this->image = $image;
+        $this->description = $description;
     }
     public function __get($attribute) {
         if (property_exists($this, $attribute)) {
