@@ -37,15 +37,11 @@
       $daoProducts->addProduct($daoProducts->createProduct($name, $_SESSION['user']['name'], $price, $image, $description), $status);
       
       if ($categoriesHidden){
-         echo "Entramos categoriesHidden <br>";
-         var_dump($name);
-         var_dump($price);
-         echo "<br> $categoriesHidden <br>";
          $id = $daoProducts->getProductId($name,$price);
          $daoProducts->insertCategoriesProduct(explode('|',$categoriesHidden),$id);
       }
-      // header("Location: ../../");
-      // exit();
+      header("Location: ../../");
+      exit();
    }
 
    ?>

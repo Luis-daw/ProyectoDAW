@@ -1,63 +1,87 @@
 :root {
-   --color-primario: #3498db;
-   /* Azul */
-   --color-secundario: #2ecc71;
-   /* Verde */
-   --color-fondo: #f8f9fa;
-   /* Gris claro */
-   --color-texto: #333;
-   /* Negro */
-   --color-enlace: #3498db;
-   /* Azul */
-   --color-enlace-hover: #2070a8;
-   /* Azul más oscuro al pasar el ratón */
-   --color-destacado: #f39c12;
-   /* Naranja */
-   --color-borde: #ddd;
-   /* Gris claro para bordes */
-}
-body {
+   --color-fondo: #2c3e50;      /* Azul oscuro para el fondo */
+   --color-primario: #3498db;   /* Azul medio para detalles principales */
+   --color-secundario: #e74c3c; /* Rojo para resaltar áreas importantes */
+   --color-texto: #ecf0f1;      /* Blanco para el texto principal */
+ }
+ 
+ body {
+   background-color: var(--color-fondo) !important;
+   color: var(--color-texto) !important;
+ }
+ 
+ /* Enlaces */
+ a {
+   color: var(--color-primario);
+ }
+ 
+ a:hover {
+   color: var(--color-secundario);
+ }
+ 
+ /* Botones y llamadas a la acción */
+ .button {
+   background-color: var(--color-primario);
+   color: #fff;
+ }
+ /* Estilo para los elementos input */
+input {
+   padding: 10px;
+   margin-bottom: 15px;
+   border: 1px solid var(--color-primario);
+   border-radius: 5px;
    background-color: var(--color-fondo);
    color: var(--color-texto);
  }
- h1, h2, h3 {
-   color: var(--color-primario);
+ 
+ /* Cambiar el color del texto en los input al enfocarlos */
+ input:focus {
+   border-color: var(--color-secundario);
  }
- a {
-   color: var(--color-enlace);
-   text-decoration: none;
+ 
+ /* Estilo para el botón */
+ .button {
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   background-color: var(--color-primario);
+   color: #fff;
  }
- a:hover {
-   color: var(--color-enlace-hover);
+ 
+ .button:hover {
+   background-color: var(--color-secundario);
  }
-.azul {
-   color: #3498db;
-}
-
-.gris {
-   color: #888888;
-}
-
-.verde {
-   color: #27ae60;
-}
-
-.blanco {
-   color: #ffffff;
-}
-
-.negro {
-   color: #000000;
-}
-
-.gris-claro {
-   color: #dddddd;
-}
-
-.gris-medio {
-   color: #888888;
-}
-
-.gris-oscuro {
-   color: #333333;
-}
+ 
+ #navBar {
+   background-color: #3498db; /* Color de fondo para la barra de navegación */
+   color: #ffffff; /* Color del texto en la barra de navegación */
+ }
+ 
+ #navBar a {
+   color: #ffffff; /* Color del enlace normal */
+ }
+ 
+ #navBar a:hover {
+   color: #ecf0f1; /* Color del enlace al pasar el ratón sobre él */
+ }
+ 
+ .navbar-toggler {
+   border-color: #ffffff; /* Color del borde del botón de despliegue en dispositivos móviles */
+ }
+ 
+ .navbar-toggler-icon {
+   background-color: #ffffff; /* Color del icono del botón de despliegue en dispositivos móviles */
+ }
+ 
+ .navbar-nav .dropdown-menu {
+   background-color: #3498db; /* Color de fondo para el menú desplegable */
+ }
+ 
+ .navbar-nav .dropdown-menu a {
+   color: #ffffff; /* Color del texto en el menú desplegable */
+ }
+ 
+ .navbar-nav .dropdown-menu a:hover {
+   background-color: #2980b9; /* Color de fondo al pasar el ratón sobre las opciones del menú desplegable */
+   color: #ffffff; /* Color del texto al pasar el ratón sobre las opciones del menú desplegable */
+ }

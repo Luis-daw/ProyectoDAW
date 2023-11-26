@@ -11,7 +11,6 @@
 
 <body>
    <?php
-
    // generateNav();
    function generateNav()
    {
@@ -24,7 +23,7 @@
       $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
       $base_url = $protocol . $host . "/proyectodaw/";
    ?>
-      <nav class="navbar navbar-expand-md bg-primary" id="test" data-bs-theme="dark">
+      <nav class="navbar navbar-expand-md" id="navBar">
          <div class="container-fluid">
             <a class="navbar-brand" href="<?php echo $base_url ?>"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="25" viewBox="0 0 100 25">
                   <text x="5" y="20" font-family="Arial" font-size="20" fill="black">Techxample</text>
@@ -47,7 +46,7 @@
                         </a>
                         <ul class="dropdown-menu">
                            <li><a class="dropdown-item" href="<?php echo $base_url . "admin/users" ?>">Gestionar usuarios</a></li>
-                           <li><a class="dropdown-item" href="<?php echo $base_url . "products/showProducts" ?>">Gestionar productos</a></li>
+                           <li><a class="dropdown-item" href="<?php echo $base_url . "admin/products" ?>">Gestionar productos</a></li>
                         </ul>
                      </li>
 

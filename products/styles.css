@@ -13,3 +13,21 @@ aside{
 strong{
    font-size: 1rem;
 }
+a {
+   text-decoration: none !important;
+   color: inherit;
+   cursor: text;
+ }
+ 
+ /* Estilo opcional para cambiar el cursor al pasar sobre el enlace */
+ a:hover {
+   text-decoration: underline; /* Puedes cambiar esto a 'none' si no quieres subrayado al pasar sobre el enlace */
+ }
+ .img-prod{
+   width: 150px;
+   height: 222px;
+ }
+ img {
+   max-width: 100%; /* La imagen se ajustará al ancho máximo del contenedor */
+   height: auto;    /* Se mantendrá la proporción de aspecto original */
+ }

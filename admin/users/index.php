@@ -14,7 +14,6 @@
 <body>
    <main>
       <?php
-
       session_start();
       require_once('../../assets/models/DaoUsers.php');
       require_once('../../nav.php');
@@ -24,15 +23,20 @@
          header("Location: ../../");
       }
       generateNav();
+      $daoUsers = new DaoUsers('proyecto-daw');
+
+      if (isset($_GET['user'])){
+         $user = $_GET['user'];
+         $daoUsers->eliminateUser($user);
+      }
       ?>
       <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="formLogin">
-         <input type="text" name="username" id="username" class='ml-35 mt-2 username'>
-         <input type="submit" value="Buscar" class="btn btn-secondary btn-buscar">
+         <input type="text" name="username" id="username" class='ml-35 mt-2 username' placeholder="Buscar usuario...">
+         <input type="submit" value="Buscar" class="button btn-buscar">
       </form>
       <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
          <?php
 
-         $daoUsers = new DaoUsers('proyecto-daw');
          if (isset($_POST['cbx'])) {
             $checkbox = $_POST['cbx'];
             $permissions = $_POST['sel'];
@@ -54,6 +58,7 @@
               <th scope='col'>Nombre de usuario</th>
               <th scope='col'>Permisos</th>
               <th scope='col'>Cambiar</th>
+              <th scope='col'>Eliminar</th>
             </tr>
          </thead>
          <tbody>
@@ -85,6 +90,7 @@
                echo "</select>";
                echo "</td>";
                echo "<td><input type='checkbox' name='cbx[" . $value['username'] . "]'></td>";
+               echo "<td><a href='./index.php?user=".$value['username']."'><button type='button'>Eliminar usuario</button></a></td>";
                echo "</tr>";
                $row++;
             }
@@ -96,7 +102,5 @@
          <input type="submit" value="Actualizar seleccionados" class="ml-35 btn btn-primary btn-enviar">
       </form>
    </main>
-
 </body>
-
 </html>

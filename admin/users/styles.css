@@ -1,8 +1,11 @@
 #table {
-   width: 80%;
-   margin-left: 8%;
+   width: 60%;
+   margin-left: 15%;
+   margin-top: 20px;
+   border-collapse: collapse;
+   background-color: #f2f2f2; /* Color de fondo para la tabla */
+   color: #333; /* Color del texto en la tabla */
 }
-
 .ml-35 {
    margin-left: 35%;
 }
@@ -22,3 +25,13 @@
    padding-bottom: .1rem;
    padding-top: .1rem;
 }
+ 
+ #table th {
+   background-color: #3498db; /* Aumentamos la especificidad */
+ }
+
+ 
+ /* Estilos para los checkboxes dentro de la tabla */
+ #table input[type="checkbox"] {
+   margin: 0;
+ }

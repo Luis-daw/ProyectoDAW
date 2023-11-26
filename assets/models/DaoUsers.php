@@ -18,7 +18,7 @@ class DaoUsers extends DB
    //Inserta una marca en la tabla
    public function insert($user)
    {
-      $query= "INSERT INTO users VALUES (:username, :name, :surname, :password, :birthdate, :direction, :permissions)";
+      $query = "INSERT INTO users VALUES (:username, :name, :surname, :password, :birthdate, :direction, :permissions)";
       $param = array();
       $param[":username"] = $user->__get("userName");
       $param[":name"] = $user->__get("name");
@@ -28,36 +28,42 @@ class DaoUsers extends DB
       $param[":direction"] = $user->__get("direction");
       $param[":permissions"] = $user->__get("permissions");
       $this->consultaSimple($query, $param);
-
    }
-
+   public function eliminateUser($user)
+   {
+      $query = "DELETE FROM users WHERE username = :username";
+      $param = array();
+      $param[':username'] = $user;
+      $this->consultaSimple($query,$param);
+   }
    public function list()
    {
       $consulta = "SELECT userName, name, surName, direction FROM users";
       $param = array();
 
       $this->consultaDatos($consulta, $param);
-      
    }
 
-   public function update($username, $permission){
+   public function update($username, $permission)
+   {
       $query = "UPDATE users
       SET permission_level = :permission
       WHERE username = :username";
-      $param= array();
+      $param = array();
       $param[':permission'] = $permission;
       $param[':username'] = $username;
-      $this->consultaSimple($query,$param);
+      $this->consultaSimple($query, $param);
    }
-   public function getUsersPermissions($permissionsLevel, $username = false){
+   public function getUsersPermissions($permissionsLevel, $username = false)
+   {
       $query = "SELECT users.username, permissions.permission_level, permissions.permission_name 
       FROM users 
       LEFT JOIN permissions ON users.permission_level = permissions.permission_level 
       WHERE permissions.permission_level < :permissions";
       $param = array();
-      if ($username){
+      if ($username) {
          $query .= " AND username LIKE :username";
-         $param[':username'] = "%".$username."%";
+         $param[':username'] = "%" . $username . "%";
       }
       $param[':permissions'] = $permissionsLevel;
       $this->consultaDatos($query, $param);
@@ -124,8 +130,8 @@ class DaoUsers extends DB
     */
    public function login($userName, $password)
    {
-      $query = 
-      "SELECT * 
+      $query =
+         "SELECT * 
       FROM users 
       WHERE username = :username 
       AND password = :password 
@@ -139,8 +145,8 @@ class DaoUsers extends DB
    }
    public function permissions($username)
    {
-      $query = 
-      "SELECT permission_level
+      $query =
+         "SELECT permission_level
       FROM users 
       WHERE username = :username
       LIMIT 1";
@@ -149,7 +155,7 @@ class DaoUsers extends DB
       $this->consultaDatos($query, $param);
       return $this->filas[0]["permission_level"];
    }
-   
+
    public function createUser($userName, $name, $surName, $password, $birthDate, $direction, $permissions)
    {
       return new User($userName, $name, $surName, $birthDate, $direction, $permissions, $this->hashKey($password));

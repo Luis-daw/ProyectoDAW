@@ -40,17 +40,3 @@ body {
  #password{
    width: 88%;
  }
-.form select {
-   width: 100%;
-   padding: 10px;
-   margin-bottom: 15px;
-   border: 1px solid var(--color-primario);
-   border-radius: 5px;   background-color: var(--color-fondo);
-   color: var(--color-texto);
-   color: var(--color-texto);
- }
- 
- .form select:focus {
-   border-color: var(--color-secundario);
- }
- 

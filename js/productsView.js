@@ -10,8 +10,10 @@ export default class ProductView{
          <article class="col-xl-4 col-lg-4 col-md-6 ps-1 product">
             <a href='./product/?product=${product.name}'>
                <h3>${product.name}</h3>
-               <img src="${product.image}" alt="Imagen de ${product.name}">
-               <p class="text-end">${product.price}</p>
+               <div class='img-prod'>
+               <img src="data:image/jpeg;base64,${product.image}" alt="Imagen de ${product.name}">
+               </div>
+               <p class="text-end">${product.price}€</p>
             </a> 
          </article>
       `;

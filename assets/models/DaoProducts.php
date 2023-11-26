@@ -84,13 +84,6 @@ class DaoProducts extends DB
          ':status' => $status,
          ':description' => $product->description
       );
-
-      echo "<br>";
-      var_dump($param);
-      echo "<br>";
-      var_dump($query);
-      echo "<br>";
-
       $this->consultaSimple($query, $param);
    }
    public function getProductId($name, $price)
@@ -186,6 +179,19 @@ class DaoProducts extends DB
       }
       return reset($products);
    }
+   public function getProductProvider($id)
+   {
+      $query = "SELECT * FROM products WHERE id=:id LIMIT 1";
+      $param = array(
+         ':id' => $id,
+      );
+      $this->consultaDatos($query, $param);
+      if (!empty($this->filas) && isset($this->filas[0]['id'])) {
+         return $this->filas[0]['provider'];
+      } else {
+         return null;
+      }
+   }
    public function insertCategoriesProduct($categories, $id)
    {
       $query = "INSERT INTO product_category (id_product, id_category) VALUES (:id, :category)";
@@ -196,6 +202,30 @@ class DaoProducts extends DB
          $param[':category'] = $category;
          $this->consultaSimple($query, $param);
       }
+   }
+   public function changeProductStatus($id, $status){
+      $query = "UPDATE products SET status = :status WHERE id = :id";
+      $param = array();
+      $param[':id'] = $id;
+      $param[':status'] = $status;
+      $this->consultaSimple($query,$param);
+   }
+   public function eliminateProduct($id){
+      $query = "DELETE FROM products WHERE id=:id";
+      $param = array();
+      $param[':id'] = $id;
+      $this->consultaSimple($query,$param);
+   }
+   public function buyProduct($productId, $nameBuyer){
+      $productProvider = $this->getProductProvider($productId);
+      $query = "INSERT INTO orders (provider,buyer, product) VALUES (:provider, :buyer, :product)";
+      $param = array(
+         ':provider' => $productProvider,
+         ':buyer' => $nameBuyer,
+         ':product' => $productId
+      );
+      var_dump($param);
+      $this->consultaSimple($query, $param);
    }
    public function createProduct($name, $username, $price, $image, $description)
    {
