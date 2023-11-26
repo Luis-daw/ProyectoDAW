@@ -227,6 +227,17 @@ class DaoProducts extends DB
       var_dump($param);
       $this->consultaSimple($query, $param);
    }
+   public function getUsersProducts($buyer){
+      $query = "SELECT products.name, products.price, products.image
+      FROM orders
+      JOIN products ON orders.product = products.id
+      WHERE orders.buyer = :buyer";
+      $param = array(
+         ':buyer' => $buyer
+      );
+      $this->consultaDatos($query, $param);
+      return $this->filas;
+   }
    public function createProduct($name, $username, $price, $image, $description)
    {
       echo "<br> nombre $name";

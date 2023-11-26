@@ -1,0 +1,8 @@
+.img-prod{
+   width: 150px;
+   height: 222px;
+ }
+ img {
+   max-width: 100%; /* La imagen se ajustará al ancho máximo del contenedor */
+   height: auto;    /* Se mantendrá la proporción de aspecto original */
+ }
