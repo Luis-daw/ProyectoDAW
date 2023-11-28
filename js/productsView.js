@@ -5,9 +5,8 @@ export default class ProductView{
    }
 
    productComponent(product){
-      console.log(product);
       return `
-         <article class="col-xl-4 col-lg-4 col-md-6 ps-1 product">
+         <article class="col-xl-4 col-lg-4 col-md-6 ps-1">
             <a href='./product/?product=${product.name}'>
                <h3>${product.name}</h3>
                <div class='img-prod'>

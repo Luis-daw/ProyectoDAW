@@ -25,9 +25,11 @@
    ?>
       <nav class="navbar navbar-expand-md" id="navBar">
          <div class="container-fluid">
-            <a class="navbar-brand" href="<?php echo $base_url ?>"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="25" viewBox="0 0 100 25">
-                  <text x="5" y="20" font-family="Arial" font-size="20" fill="black">Techxample</text>
+            <a class="navbar-brand" href="<?php echo $base_url ?>">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="145" height="40">
+                  <text x="2" y="30" font-family="Arial" font-size="20" fill="white">InfotechTrade</text>
                </svg>
+
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
@@ -70,6 +72,7 @@
                      if ($permissions >= 2) {
                         echo '<li><a class="dropdown-item" href="' . $base_url . "products/addproduct" . '">Añadir producto</a></li>';
                      }
+                     echo '<li><a class="dropdown-item" href="' . $base_url . "?cerrar=true" . '">Cerrar sesión</a></li>';
                   }
                   ?>
                </ul>

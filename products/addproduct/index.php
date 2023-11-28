@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Añadir producto</title>
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
@@ -19,8 +19,6 @@
       exit;
    }
    $categories = $daoProducts->getCategories();
-   $_SESSION['user']['name'] = 'Administrador';
-   $_SESSION['user']['permissions'] = 5;
    if (isset($_POST['name']) && isset($_POST['price'])) {
 
       $name = $_POST['name'];
@@ -78,9 +76,9 @@
             <label for="description" class="form-label">Descripción:</label>
             <textarea class="form-control" name="description" id="description" cols="10" rows="3"></textarea>
          </div>
-         <textarea id="categories" cols="30" rows="2" readonly></textarea>
+         <textarea id="categories" cols="29" rows="2" readonly class="ms-2 me-2"></textarea>
          <input type="hidden" name="categories" id="hidden">
-         <button type="submit" class="btn btn-primary" id="btnSend">Enviar</button>
+         <button type="submit" class="button" id="btnSend">Enviar</button>
       </form>
    </main>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

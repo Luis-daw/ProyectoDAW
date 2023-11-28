@@ -1,3 +1,15 @@
+:root {
+   --color-fondo: #2c3e50;      /* Azul oscuro para el fondo */
+   --color-primario: #3498db;   /* Azul medio para detalles principales */
+   --color-secundario: #e74c3c; /* Rojo para resaltar áreas importantes */
+   --color-texto: #ecf0f1;      /* Blanco para el texto principal */
+ }
+ 
+ body {
+   background-color: var(--color-fondo) !important;
+   color: var(--color-texto) !important;
+ }
+
 .form-container{
    width: 70%;
    margin-left: 15%;
@@ -11,3 +23,18 @@
    margin-left: 45%;
    margin-bottom: 2%;
 }
+.button {
+   background-color: var(--color-primario);
+   color: #fff;
+ }
+ .button {
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   background-color: var(--color-primario);
+   color: #fff;
+ }
+ 
+ .button:hover {
+   background-color: var(--color-secundario);
+ }

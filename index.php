@@ -11,32 +11,18 @@
 
 <body>
    <?php
-      session_start();
-      require_once './nav.php';
-      generateNav();
+   session_start();
+   require_once './nav.php';
+   if (isset($_GET['cerrar'])){
+      $_SESSION['user']['name'] = null;
+      $_SESSION['user']['permissions'] = 0;
+   }
+   generateNav();
    ?>
-   
-   <footer class="row container w-100 bg-primary ps-4 pt-2" data-bs-theme="dark">
-      <div class="col-lg-4 col-md-6">
-         <div class="row">Sobre nosotros</div>
-         <div class="row">Política de privacidad</div>
-         <div class="row">Política de cookies</div>
-         <div class="row">Aviso legal</div>
-         <div class="row">Información sobre compras</div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-         <div class="row">Contacto</div>
-         <div class="row">
-            <div class="col-3">insta</div>
-            <div class="col-3">twitt</div>
-            <div class="col-3">faceb</div>
-            <div class="col-3">email</div>
-         </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-         <p class="copyright">Todos los derechos reservados</p>
-      </div>
-   </footer>   
+
+   <main class="mt-4 pt-4">
+      <h3 class="mt-4 pt-4 text-center">Bienvenido a InfotechTrade consulta nuestra política de privacidad y compras <a href="./politicas">aquí</a></h3>
+   </main>
 </body>
 
 </html>

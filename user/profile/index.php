@@ -28,9 +28,9 @@
    $daoProducts = new DaoProducts('proyecto-daw');
    $products = $daoProducts->getUsersProducts($user);
    ?>
-   <h3 class="ms-2"><?= $user ?></h3>
-   <h4 class="mt-4">Productos comprados recientemente</h4>
-   <div class="row">
+   <h3 class="ps-2"><?= $user ?></h3>
+   <h4 class="ps-2 mt-4">Productos comprados recientemente</h4>
+   <div class="row ps-4">
 
    <?php foreach ($products as $product) : ?>
       <article class="col-xl-2 col-lg-2 col-md-4 ps-1 product">

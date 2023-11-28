@@ -35,8 +35,8 @@
    }
    $productName = isset($_GET['product']) ? $_GET['product'] : false;
    if (!$productName) {
-      // header("Location: ../");
-      // exit();
+      header("Location: ../");
+      exit();
    }
    $daoProducts = new DaoProducts('proyecto-daw');
    $product = $daoProducts->getProductName($productName);

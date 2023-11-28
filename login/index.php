@@ -34,7 +34,7 @@
       <div class="row">
          <?php 
          if ($login === false){
-            echo "<p> Usuario o contraseña mal introducidos </p>";
+            echo "<p class='main-color'> Usuario o contraseña mal introducidos </p>";
          }
          ?>
       </div>

@@ -85,3 +85,6 @@ input {
    background-color: #2980b9; /* Color de fondo al pasar el ratón sobre las opciones del menú desplegable */
    color: #ffffff; /* Color del texto al pasar el ratón sobre las opciones del menú desplegable */
  }
+ .mt-15{
+   margin-top: 15%;
+ }
