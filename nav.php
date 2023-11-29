@@ -11,7 +11,7 @@
 
 <body>
    <?php
-   // generateNav();
+   // Función que nos genera la barra de navegación en todo el proyecto.
    function generateNav()
    {
       if (session_status() == PHP_SESSION_NONE) {

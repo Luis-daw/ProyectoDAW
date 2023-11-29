@@ -15,6 +15,12 @@
    session_start();
    require_once('../../assets/models/DaoProducts.php');
    require_once('../../nav.php');
+
+   $userPermissions = isset($_SESSION['user']['permissions']) ? $_SESSION['user']['permissions'] : false;
+   if (!$userPermissions || $userPermissions < 4) {
+      header("Location: ../../");
+      exit();
+   }
    generateNav();
    $daoProducts = new DaoProducts('proyecto-daw');
    if (isset($_GET['eliminate'])){
@@ -24,6 +30,10 @@
       $daoProducts->changeProductStatus($_GET['add'], 'enabled');
    }
    $products = $daoProducts->list('waiting');
+   if(!is_array($products)){
+      header("Location: ../../");
+      exit();
+   }
    ?>
    <div class="container mt-4">
       <h2>Lista de products</h2>

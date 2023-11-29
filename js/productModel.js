@@ -1,11 +1,4 @@
 import Product from "./product.js";
-// export default class ProductModel{
-   
-//    constructor(){
-
-//    }
-// }
-
 
 export let ProductModel = (function (){
    let instantiated;

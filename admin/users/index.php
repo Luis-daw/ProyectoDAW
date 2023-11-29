@@ -19,8 +19,9 @@
       require_once('../../nav.php');
 
       $userPermissions = isset($_SESSION['user']['permissions']) ? $_SESSION['user']['permissions'] : false;
-      if (!$userPermissions) {
+      if (!$userPermissions || $userPermissions < 4) {
          header("Location: ../../");
+         exit();
       }
       generateNav();
       $daoUsers = new DaoUsers('proyecto-daw');

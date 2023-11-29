@@ -14,6 +14,8 @@ class DaoProducts extends DB
    {
       $this->dbname = $dbname;
    }
+
+   //Convierte los productos en json
    public function toJson()
    {
       $products = $this->list();
@@ -36,10 +38,9 @@ class DaoProducts extends DB
          ];
       }
 
-      // Convertir el arreglo principal en formato JSON
+      // Convertir el array principal en formato JSON
       $json = json_encode($data);
 
-      // Guardar el JSON en un archivo (por ejemplo, 'productos.json')
       $host = $_SERVER['HTTP_HOST'];
       $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
       $base_url = $protocol . $host;
@@ -86,6 +87,8 @@ class DaoProducts extends DB
       );
       $this->consultaSimple($query, $param);
    }
+
+   //Recogemos el id de un producto
    public function getProductId($name, $price)
    {
       $query = "SELECT id FROM products WHERE name=:name AND price=:price LIMIT 1";
@@ -103,6 +106,8 @@ class DaoProducts extends DB
          return null;
       }
    }
+
+   //Recogemos las categorias
    public function getCategories()
    {
       $query = "SELECT * FROM categories";
@@ -120,6 +125,8 @@ class DaoProducts extends DB
       }
       return $categories;
    }
+
+   //Listamos los productos, por defecto los que estan en enabled
    public function list($filter = "enabled")
    {
 
@@ -148,10 +155,13 @@ class DaoProducts extends DB
       } else {
          // No se encontraron resultados
          echo "No se encontraron productos en la base de datos.";
+         $products = null;
       }
 
       return $products;
    }
+
+   //Recogemos un producto a traves del nombre
    public function getProductName($name)
    {
       $query = "SELECT * FROM products WHERE name =:name";
@@ -179,6 +189,8 @@ class DaoProducts extends DB
       }
       return reset($products);
    }
+
+   //Recogemos el provider de un producto a traves del id
    public function getProductProvider($id)
    {
       $query = "SELECT * FROM products WHERE id=:id LIMIT 1";
@@ -192,6 +204,8 @@ class DaoProducts extends DB
          return null;
       }
    }
+
+   //Insertamos las categorias de un producto
    public function insertCategoriesProduct($categories, $id)
    {
       $query = "INSERT INTO product_category (id_product, id_category) VALUES (:id, :category)";
@@ -203,6 +217,8 @@ class DaoProducts extends DB
          $this->consultaSimple($query, $param);
       }
    }
+
+   //Cambiamos el estado del producto
    public function changeProductStatus($id, $status){
       $query = "UPDATE products SET status = :status WHERE id = :id";
       $param = array();
@@ -210,12 +226,16 @@ class DaoProducts extends DB
       $param[':status'] = $status;
       $this->consultaSimple($query,$param);
    }
+
+   //Eliminamos un producto
    public function eliminateProduct($id){
       $query = "DELETE FROM products WHERE id=:id";
       $param = array();
       $param[':id'] = $id;
       $this->consultaSimple($query,$param);
    }
+
+   //Compra de un producto, se interta en la tabla orders
    public function buyProduct($productId, $nameBuyer){
       $productProvider = $this->getProductProvider($productId);
       $query = "INSERT INTO orders (provider,buyer, product) VALUES (:provider, :buyer, :product)";
@@ -224,9 +244,10 @@ class DaoProducts extends DB
          ':buyer' => $nameBuyer,
          ':product' => $productId
       );
-      var_dump($param);
       $this->consultaSimple($query, $param);
    }
+
+   //Recogemos los productos de una persona.
    public function getUsersProducts($buyer){
       $query = "SELECT products.name, products.price, products.image
       FROM orders
@@ -238,9 +259,10 @@ class DaoProducts extends DB
       $this->consultaDatos($query, $param);
       return $this->filas;
    }
+
+   //Función para crear un producto
    public function createProduct($name, $username, $price, $image, $description)
    {
-      echo "<br> nombre $name";
       return new Product(null, $name, $username, $price, $image, $description);
    }
 }
